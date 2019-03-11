@@ -23,6 +23,28 @@ body {
     font-weight: bold;
 }
 
+.search{
+    padding-left: 40px;
+    padding-right:40px;
+    margin-left: 60px;
+    margin-right:60px;
+}
+.navbar-brand{
+    padding-right: 20px;
+}
+.list-group{
+    margin-left: 10px;
+    width: 325px;
+    position: relative;
+    
+}
+
+.d-flex  a{
+    color: white;
+    text-decoration: none;
+}
+
+
 header{
     background-color: white;
 }
@@ -36,7 +58,7 @@ header{
 }
 
 .nav-kanan li {
-    padding: 0 25px;
+    padding: 0 10px;
 }
 
 li {
@@ -263,16 +285,6 @@ img.image1{
     background-color: transparent;
 }
 
-/* .blink-me {
-    animation: blinker 2s linear infinite;
-  } */
-  
-/* @keyframes blinker {
-  50% {
-    color: white;
-  }
-} */
-
 .contact-left-container {
     background-image: url(../img/side-view.jpg);
     background-color: #19345E;
@@ -284,3 +296,4 @@ img.image1{
 .contact-logo-position {
     margin: 300px 0 0 175px;
 }
+
