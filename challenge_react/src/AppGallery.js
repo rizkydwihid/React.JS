@@ -8,7 +8,7 @@ class AppGallery extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
+        
         <Gallery />
         <Footer />
       </div>

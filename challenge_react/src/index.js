@@ -2,11 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import App from './App';
+// import App from './App';
+import AppRouter from './AppRouter';
+import { BrowserRouter } from 'react-router-dom'
+
 // import AppContact from './AppContact';
 // import AppGallery from './AppGallery';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const rootEl = document.getElementById("root");
+const render = Componet =>
+ReactDOM.render(
+    <BrowserRouter>
+    <Componet />
+    </BrowserRouter>,
+    rootEl
+);
+render(AppRouter);
+// ReactDOM.render(<App />, document.getElementById('root'));
 // ReactDOM.render(<AppGallery />, document.getElementById('root'));
 // ReactDOM.render(<AppContact />, document.getElementById('root'));
 // ReactDOM.render(<AppContact />, document.getElementById('root'));
