@@ -7,16 +7,13 @@ import Footer from './componen/Footer';
 import Search from './componen/Search';
 import ContentBlog from './componen/ContentBlog';
 import ContentBlog2 from './componen/ContentBlog2';
-import axios from 'axios'
+// import axios from 'axios';
+import {connect} from 'unistore/react';
+import {withRouter} from 'react-router-dom';
+import {actions} from './Store';
 
 const imgNOL = 0;
 
-const apiKey = "ad053b2f0cb649a4856a94bd79194502";
-const baseURL = "https://newsapi.org/v2/";
-const source = "bitcoin";
-const contry = "us";
-const urlHeadLine = baseURL + "everything?q=" + source + "&apiKey=" + apiKey;
-const urlHeadLine2 = baseURL + "top-headlines?country=" + contry + "&apiKey=" + apiKey;
 
 class App extends Component {
   constructor (props){
@@ -31,19 +28,9 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    const self = this;
-    axios
-    .get(urlHeadLine)
-    .then(function(response){
-      self.setState({listNews: response.data.articles})
-    })
-    axios
-    .get(urlHeadLine2)
-    .then(function(response){
-      self.setState({listNews2: response.data.articles})
-    })
-    .catch(function(error){
-    });
+    // const self = this;
+    this.props.getURLHeadnews()
+
   }
 
   handleInputChange = e => {
@@ -55,78 +42,27 @@ class App extends Component {
         search: value
       },
     () => {
-      this.searchNews(value)
+      this.props.searchNews(value)
     }
     );
   };
 
-  handleClick = e => {
-    console.log("event", e);
-    let economi = "Economi"
-    this.setState(
-      () => {
-        this.searchCategory(economi);
-      }
-    )
+  ekonomi = e => {
+    this.props.searchCategory('Economi')
   }
-
-  handleClick2 = e => {
-    console.log("event", e);
-    let politic = "Politic"
-    this.setState(
-      () => {
-        this.searchCategory(politic);
-      }
-    )
+  politik = e => {
+    this.props.searchCategory('Politic')
   }
-  
-  handleClick3 = e => {
-    console.log("event", e);
-    let market = "Market"
-    this.setState(
-      () => {
-        this.searchCategory(market);
-      }
-    )
+  market = e => {
+    this.props.searchCategory('Market')
   }
-
-  searchCategory = async value => {
-    console.log("searchCategory", value);
-    const self = this ;
-    try {
-      const response = await axios.get(
-        baseURL + "everything?q=" + value + "&apiKey=" + apiKey
-      )
-      console.log(response);
-      self.setState({listNews: response.data.articles})
-    }catch (error){
-      console.log(error);
-    }
-  }
-
-  searchNews = async keyword => {
-    console.log("searchNews", keyword);
-    const self = this;
-    if (keyword.length > 2){
-      try{
-        const response = await axios.get(
-          baseURL + "everything?q=" + keyword + "&apiKey=" + apiKey
-          )
-          console.log(response);
-          self.setState({ listNews: response.data.articles})
-          } 
-          catch(error){
-          console.error(error);
-          }
-      }
-    }
   
 
   render() {
     const {listNews, listNews2, username, isilogin} = this.state;
     return (
       <div className="App">
-        <Search doSearch={this.handleInputChange} doClick={this.handleClick} doClick2={this.handleClick2} doClick3={this.handleClick3}/>
+        <Search doSearch={this.handleInputChange} doClick={this.ekonomi} doClick2={this.politik} doClick3={this.market}/>
         
         <div className="container">
           <div className="row">
@@ -138,7 +74,7 @@ class App extends Component {
             
         </div>
         </div>
-          {listNews2.map((item, key) => {
+          {this.props.listNews2.map((item, key) => {
             return <ContentBlog key={key} title={item.title} url={item.url} publishedAt={item.publishedAt} author={item.author}/> 
           })}
           <br/>
@@ -146,7 +82,7 @@ class App extends Component {
         
           <div class="col-md-8">
           
-            {listNews.map((item,key) => {
+            {this.props.listNews.map((item,key) => {
               const src_img = item.urlToImage === null ? imgNOL : item.urlToImage;
               const src_content = item.urlToImage !== null ? item.content : "";
               return <ContentBlog2 key={key} title={item.title} publishedAt={item.publishedAt} content={src_content} img={src_img} author={item.author}/>;
@@ -161,7 +97,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect("listNews, listNews2", actions)(withRouter(App));
 
 
 

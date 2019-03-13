@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/css/bootstrap.min.css';
 import '../assets/css/main.css';
+import { withRouter } from "react-router-dom";
+import { connect } from 'unistore/react';
+import { actions } from '../Store';
 
-const Navigation = props => {
+class Navigation extends Component {
+    render(){
     return (
         <header className="container">
             <div className="row">
@@ -27,13 +31,13 @@ const Navigation = props => {
                       <Link to="/news">News</Link>
                     </li>
                     <li class="nav-item">
-                      <Link to="/profil">Profile</Link>
+                      <Link to="/profile">Profile</Link>
                     </li>
-                    <li class="nav-item">
-                      <Link to="/signin">Login</Link>
+                    <li class="nav-item" style={{display: this.props.is_login ? "none" : "block"}}>
+                      <Link to="/signin" >Login</Link>
                     </li>
-                    <li class="nav-item">
-                      <Link to="/" onClick={() => props.postSignout()}>Logout</Link>
+                    <li class="nav-item" style={{display: this.props.is_login ? "block" : "none"}}>
+                      <Link to="/signin" onClick={() => this.props.postSignout()} >Logout</Link>
                     </li>
                 </ul>
                 </div>
@@ -41,5 +45,6 @@ const Navigation = props => {
         </header>
       );
     }
+  }
   
-export default Navigation;
+  export default connect("is_login", actions)(withRouter(Navigation));

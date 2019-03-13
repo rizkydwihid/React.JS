@@ -4,7 +4,9 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 // import App from './App';
 import AppRouter from './AppRouter';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'unistore/react';
+import { store } from './Store';
 
 // import AppContact from './AppContact';
 // import AppGallery from './AppGallery';
@@ -12,9 +14,11 @@ import { BrowserRouter } from 'react-router-dom'
 const rootEl = document.getElementById("root");
 const render = Componet =>
 ReactDOM.render(
+    <Provider store = {store}>
     <BrowserRouter>
     <Componet />
-    </BrowserRouter>,
+    </BrowserRouter>
+    </Provider>,
     rootEl
 );
 render(AppRouter);
